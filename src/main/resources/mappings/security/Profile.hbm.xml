@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+	<!-- Generated 21/08/2009 08:18:27 by Hibernate Tools 3.2.4.GA -->
+<hibernate-mapping>
+	<class name="com.topgroup.blankapp.model.PerfilBean" table="PROFILES">
+		<id name="id" type="integer">
+			<column name="IDPROFILE" precision="22" scale="0" />
+			<generator class="increment" />
+		</id>
+
+		<many-to-one name="system" class="com.topgroup.commons.security.model.System" column="IDSYSTEM" not-null="true" />
+		<property name="name" type="string" column="PROFILE" length="50" not-null="true" />
+		<property name="abbreviation" type="string" column="ABBREVIATION" length="10" />
+
+		<property name="validFrom" type="date" column="VALIDFROM" />
+		<property name="validTo" type="date" column="VALIDTO" />
+
+		<set name="roles" inverse="false" lazy="true" table="PROFILESROLES">
+			<key>
+				<column name="IDPROFILE" not-null="true" />
+			</key>
+			<many-to-many class="com.topgroup.blankapp.model.RolBean" column="IDROLE" />
+		</set>
+	</class>
+</hibernate-mapping>

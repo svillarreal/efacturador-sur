@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+	<!-- Generated 21/08/2009 08:18:27 by Hibernate Tools 3.2.4.GA -->
+<hibernate-mapping>
+	<class name="com.topgroup.commons.security.model.Session" table="SESSIONS">
+		<id name="id" type="integer">
+			<column name="IDSESSION" />
+			<generator class="increment"></generator>
+		</id>
+
+		<property name="idSystem" type="integer" insert="false" update="false">
+			<column name="IDSYSTEM" />
+		</property>
+
+		<property name="sessionInitDate" type="date">
+			<column name="SESSIONINITDATE" not-null="true" />
+		</property>
+		<property name="sessionEndDate" type="date">
+			<column name="SESSIONENDDATE" />
+		</property>
+		<property name="observations" type="string">
+			<column name="OBSERVATIONS" />
+		</property>
+		<set name="logs" inverse="true" lazy="true" cascade="all,delete-orphan">
+			<key>
+				<column name="IDSESSION" not-null="true" />
+			</key>
+			<one-to-many class="com.topgroup.commons.security.model.Log" />
+		</set>
+
+		<many-to-one name="participation" class="com.topgroup.commons.security.model.Participation">
+			<column name="IDSYSTEM" not-null="true" />
+			<column name="IDUSER" not-null="true" />
+		</many-to-one>
+
+	</class>
+
+</hibernate-mapping>

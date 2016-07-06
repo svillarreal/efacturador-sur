@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+
+	<bean id="dataSource_jndi" class="org.springframework.jndi.JndiObjectFactoryBean" lazy-init="true">
+		<property name="jndiName" value="java:comp/env/jdbc/blankapp" />
+	</bean>
+
+	<bean id="dataSource_blankapp" class="org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy">
+		<property name="targetDataSource" ref="dataSource_jndi" />
+	</bean>
+
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="packagesToScan" value="com.topgroup.blankapp.model,com.topgroup.commons.menu.model" />
+		<property name="mappingDirectoryLocations">
+			<set>
+				<value>classpath:/mappings</value>
+			</set>
+		</property>
+		<property name="dataSource" ref="dataSource_blankapp" />
+<!-- 		Referencia al transaction manager de JTA -->
+<!-- 		<property name="jtaTransactionManager" ref="transactionManager" /> -->
+		<property name="hibernateProperties">
+			<props>
+				<!-- poner el Dialect de Hibernate que corresponda -->
+				<prop key="hibernate.dialect">${blankapp.hibernate.dialect}</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">true</prop>
+				<prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory</prop>
+				<prop key="hibernate.cache.use_query_cache">true</prop>
+				<prop key="hibernate.cache.use_second_level_cache">true</prop>
+				<prop key="hibernate.cache.provider_configuration">/ehcache.xml</prop>
+				<prop key="hibernate.default_batch_fetch_size">30</prop>
+				<prop key="hibernate.jdbc.batch_size">20</prop>
+				<prop key="hibernate.jdbc.fetch_size">25</prop>
+				<prop key="hibernate.order_inserts">true</prop>
+				<prop key="hibernate.order_updates">true</prop>
+<!-- 				Descomentar hibernate.connection.release_mode si se utiliza JTA -->
+<!-- 				<prop key="hibernate.connection.release_mode">after_statement</prop> -->
+			</props>
+		</property>
+	</bean>
+
+	<alias name="sessionFactory" alias="sessionFactorySecurity" />
+
+	<!--========== TransactionManager ========== -->
+
+	<!-- A transaction manager for working with Hibernate SessionFactories -->
+	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+<!-- 	Para JTA utilizar el siguiente bean -->
+<!-- 	<bean id="transactionManager" class="${jta.transaction.manager.impl}"> -->
+<!-- 		<property name="allowCustomIsolationLevels" value="true" /> -->
+<!-- 	</bean> -->
+
+	<!--========== /TransactionManager ========== -->
+</beans>

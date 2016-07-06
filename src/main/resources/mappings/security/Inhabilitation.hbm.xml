@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 21/08/2009 07:40:39 by Hibernate Tools 3.2.4.GA -->
+<hibernate-mapping>
+    <class name="com.topgroup.commons.security.model.Inhabilitation" table="INHABILITATION">
+        <id name="id" type="integer">
+            <column name="IDINHABILITATION" precision="22" scale="0" />
+            <generator class="increment" />
+        </id>
+        <many-to-one name="system" class="com.topgroup.commons.security.model.System" >
+            <column name="IDSYSTEM" />
+        </many-to-one>
+        <property name="dateFrom" type="date">
+            <column name="DATEFROM" length="7" not-null="true" />
+        </property>
+        <property name="dateTo" type="date">
+            <column name="DATETO" length="7" not-null="true" />
+        </property>
+        <property name="description" type="string">
+            <column name="DESCRIPTION" length="100" />
+        </property>
+        <property name="creationDate" type="date">
+            <column name="CREATIONDATE" length="7" />
+        </property>
+        <property name="creationUserId" type="integer">
+            <column name="CREATIONUSERID" precision="22" scale="0" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security" xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+           http://www.springframework.org/schema/security
+           http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+
+	<!-- http://static.springsource.org/spring-security/site/docs/3.1.x/reference/springsecurity-single.html -->
+
+	<!-- You can use multiple <intercept-url> elements to define different access requirements for different sets of URLs, but 
+		they will be evaluated in the order listed and the first match will be used. So you must put the most specific matches at 
+		the top. -->
+
+	<!-- The prefix “ROLE_” is a marker which indicates that a simple comparison with the user's authorities should be made. 
+		In other words, a normal role-based check should be used. -->
+	<http auto-config="true">
+		<!-- <intercept-url pattern="/app/**" access="ROLE_USER" /> -->
+
+<!-- 		<intercept-url pattern="/base/login.jsp" access="IS_AUTHENTICATED_ANONYMOUSLY" /> -->
+		
+		<intercept-url pattern="/app" access="ROLE_MOSTRAR-ELEMENTOS_APLICACION" />
+		<intercept-url pattern="/app/secure" access="ROLE_MOSTRAR-ELEMENTOS_APLICACION" />
+		<intercept-url pattern="/app/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		<intercept-url pattern="/base/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		
+		<intercept-url pattern="/VAADIN/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		<intercept-url pattern="/img/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+
+		<intercept-url pattern="/**" access="ROLE_MOSTRAR-OPCIONES_PUBLICAS" />
+
+		<!-- <intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY" /> -->
+
+		<form-login login-page="/app/login" default-target-url='/app/secure' always-use-default-target='true' />	
+<!-- 		<form-login login-page="/base/login.jsp" default-target-url="/app" always-use-default-target="true" /> -->
+	</http>
+
+	<!-- custom implementation of Spring Security's UserDetailsService -->
+	<authentication-manager>
+		<authentication-provider user-service-ref="userDetailsService">
+			<password-encoder ref="passwordEncoder" />
+		</authentication-provider>
+	</authentication-manager>
+
+	<beans:bean id="passwordEncoder" class="com.topgroup.commons.security.acegi.MD5EncoderAcegi" />
+
+	<beans:bean id="simulationStrategy" class="com.topgroup.commons.security.model.SimulationInAuth">
+		<beans:property name="securityFactory" ref="securityFactory" />
+	</beans:bean>
+
+	<beans:bean id="securityFactory" class="com.topgroup.commons.security.acegi.SecurityObjectFactoryAcegi" />
+	
+	<beans:alias name="txAdvice" alias="abstractTransactionManager"/> 
+	
+</beans:beans>

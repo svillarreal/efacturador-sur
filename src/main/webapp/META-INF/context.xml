@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context docBase="blankapp-vaadin" path="/blankapp-vaadin" reloadable="true" source="org.eclipse.jst.j2ee.server:blankapp-vaadin"
+	crossContext="true">
+	<ResourceLink name="jdbc/blankapp" global="jdbc/blankapp" type="javax.sql.DataSource" />
+</Context>

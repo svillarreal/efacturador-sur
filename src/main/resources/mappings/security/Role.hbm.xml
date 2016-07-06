@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+	<!-- Generated 21/08/2009 08:18:27 by Hibernate Tools 3.2.4.GA -->
+<hibernate-mapping>
+	<class name="com.topgroup.blankapp.model.RolBean" table="ROLES" discriminator-value="SIMPLE">
+		<id name="id" type="integer">
+			<column name="IDROLE" />
+			<generator class="increment"></generator>
+		</id>
+		
+		<discriminator>
+			<formula>
+			<![CDATA[
+			(
+			CASE WHEN (SELECT COUNT(*) FROM COMPOSITEROLES CR WHERE CR.IDROLE = IDROLE) = 0 THEN 'SIMPLE' ELSE 'COMPOSITE' END
+			)
+			]]>
+			</formula>
+		</discriminator>
+		
+		<many-to-one name="system"
+			class="com.topgroup.commons.security.model.System">
+			<column name="IDSYSTEM" not-null="true" />
+		</many-to-one>
+		<property name="name" type="string">
+			<column name="NAME" length="50" not-null="true" />
+		</property>
+		<property name="abbreviation" type="string">
+			<column name="ABBREVIATION" length="10" />
+		</property>
+		
+		<set name="accesses" inverse="false" lazy="true" table="ROLESACCESSES">
+			<key>
+				<column name="IDROLE" not-null="true" />
+			</key>
+			<many-to-many class="com.topgroup.commons.security.model.Access">
+				<column name="IDACTION" />
+				<column name="IDRESOURCE" />
+			</many-to-many>
+		</set>
+
+		<property name="validFrom" type="date" column="VALIDFROM" />
+		<property name="validTo" type="date" column="VALIDTO" />
+		
+		<subclass name="com.topgroup.commons.security.model.CompositeRole" discriminator-value="COMPOSITE">
+			
+			<set name="roles" inverse="false" lazy="false" table="COMPOSITEROLES">
+				<key>
+					<column name="IDROLE" not-null="true" />
+				</key>
+				<many-to-many class="com.topgroup.blankapp.model.RolBean" column="IDINCLUDEDROLE" />
+			</set>
+
+		</subclass>
+	</class>
+</hibernate-mapping>
