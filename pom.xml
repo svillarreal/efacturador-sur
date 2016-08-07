@@ -2,464 +2,290 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-	<parent>
-		<groupId>topgroup.commons</groupId>
-		<artifactId>commons-blankapp</artifactId>
-		<version>1.0.0-SNAPSHOT</version>
-	</parent>
-
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>topgroup.commons.commons-blankapp</groupId>
-	<artifactId>blankapp-vaadin</artifactId>
-	<packaging>war</packaging>
-	<version>1.0.1-SNAPSHOT</version>
-	<name>Vaadin Web Application</name>
+	<groupId>proevolutionit.efacturador</groupId>
+	<artifactId>efacturador-project</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>eFacturador Web Project</name>
+
+	<organization>
+		<name>ProEvolutionIT</name>
+		<url>www.proevolutionit.com.ar</url>
+	</organization>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<vaadin.version>6.8.12</vaadin.version>
-		<gwt.version>2.3.0</gwt.version>
-		<gwt.plugin.version>2.2.0</gwt.plugin.version>
+		<java.version>1.6</java.version>
+		<vaadin.version>7.4.5</vaadin.version>
+		<spring.version>4.2.4.RELEASE</spring.version>
+		<slf4j.version>1.7.12</slf4j.version>
+		<hibernate.version>5.0.6.Final</hibernate.version>
+		<hibernate-validator.version>5.2.2.Final</hibernate-validator.version>
+		<spring-security.version>4.1.1.RELEASE</spring-security.version>
 	</properties>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
-				</configuration>
-			</plugin>
+	<modules>
+		<module>efacturador-core</module>
+		<module>efacturador</module>
+	</modules>
 
-			<!-- A simple Jetty test server at http://localhost:8080/blankapp-web can be launched with the Maven goal jetty:run and 
-				stopped with jetty:stop -->
-			<plugin>
-				<groupId>org.mortbay.jetty</groupId>
-				<artifactId>maven-jetty-plugin</artifactId>
-				<version>6.1.24</version>
-				<configuration>
-					<!-- Directorio de configuracion -->
-					<systemProperties>
-						<systemProperty>
-							<name>blankapp.configuration.dir</name>
-							<value>${basedir}/src/main/config</value>
-						</systemProperty>
-					</systemProperties>
-					<!-- Archivo de configuracion servidor -->
-					<jettyConfig>src/main/config/jetty/jetty.xml</jettyConfig>
-					<stopPort>9966</stopPort>
-					<stopKey>blankapp-web</stopKey>
-					<!-- Redeploy every x seconds if changes are detected, 0 for no automatic redeployment -->
-					<scanIntervalSeconds>0</scanIntervalSeconds>
-					<!-- make sure Jetty also finds the widgetset -->
-					<webAppConfig>
-						<contextPath>/blankapp</contextPath>
-						<baseResource implementation="org.mortbay.resource.ResourceCollection">
-							<!-- Workaround for Maven/Jetty issue http://jira.codehaus.org/browse/JETTY-680 -->
-							<!-- <resources>src/main/webapp,${project.build.directory}/${project.build.finalName}</resources> -->
-							<resourcesAsCSV>src/main/webapp,${project.build.directory}/${project.build.finalName}</resourcesAsCSV>
-						</baseResource>
-					</webAppConfig>
-				</configuration>
-				<dependencies>
-					<!-- <dependency> <groupId>com.h2database</groupId> <artifactId>h2</artifactId> <version>1.3.165</version> </dependency> -->
-					<dependency>
-						<groupId>com.oracle</groupId>
-						<artifactId>ojdbc14</artifactId>
-						<version>10.2.0.2.0</version>
-					</dependency>
-					<dependency>
-						<groupId>commons-dbcp</groupId>
-						<artifactId>commons-dbcp</artifactId>
-						<version>1.4</version>
-					</dependency>
-				</dependencies>
-			</plugin>
+	<dependencyManagement>
 
-			<!-- Hibernate Plugin -->
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>hibernate3-maven-plugin</artifactId>
-				<version>2.2</version>
-				<configuration>
-					<components>
-						<component>
-							<name>hbm2ddl</name>
-							<implementation>annotationconfiguration</implementation>
-						</component>
-						<component>
-							<name>hbm2hbmxml</name>
-							<outputDirectory>target/hibernate3/mappings</outputDirectory>
-							<implementation>jdbcconfiguration</implementation>
-						</component>
-						<component>
-							<name>hbm2java</name>
-							<outputDirectory>target/hibernate3/classes</outputDirectory>
-							<implementation>jdbcconfiguration</implementation>
-						</component>
-					</components>
-					<componentProperties>
-						<jdk5>true</jdk5>
-						<ejb3>true</ejb3>
-						<configurationfile>src/main/config/hibernate/hibernate.cfg.xml</configurationfile>
-						<revengfile>src/main/config/hibernate/hibernate.reveng.xml</revengfile>
-						<outputfilename>src/main/config/hibernate/blankapp-ddl.sql</outputfilename>
-						<drop>true</drop>
-						<export>false</export>
-						<format>true</format>
-					</componentProperties>
-				</configuration>
-				<dependencies>
-					<dependency>
-						<groupId>com.h2database</groupId>
-						<artifactId>h2</artifactId>
-						<version>1.3.165</version>
-					</dependency>
-					<dependency>
-						<groupId>cglib</groupId>
-						<artifactId>cglib</artifactId>
-						<version>2.2.2</version>
-					</dependency>
-				</dependencies>
-			</plugin>
+		<dependencies>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<configuration>
-					<forkMode>pertest</forkMode>
-				</configuration>
-			</plugin>
+			<!-- Dependencias Vaadin -->
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-eclipse-plugin</artifactId>
-				<configuration>
-					<ajdtVersion>none</ajdtVersion>
-					<additionalProjectnatures>
-						<projectnature>org.springframework.ide.eclipse.core.springnature</projectnature>
-					</additionalProjectnatures>
-					<additionalBuildcommands>
-						<buildcommand>org.springframework.ide.eclipse.core.springbuilder</buildcommand>
-					</additionalBuildcommands>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+			<dependency>
+				<groupId>com.vaadin</groupId>
+				<artifactId>vaadin-server</artifactId>
+				<version>${vaadin.version}</version>
+			</dependency>
 
-	<dependencies>
+			<dependency>
+				<groupId>com.vaadin</groupId>
+				<artifactId>vaadin-client</artifactId>
+				<version>${vaadin.version}</version>
+			</dependency>
 
-		<!-- Dependencias Test -->
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.5</version>
-			<scope>test</scope>
-		</dependency>
+			<dependency>
+				<groupId>com.vaadin</groupId>
+				<artifactId>vaadin-client-compiler</artifactId>
+				<version>${vaadin.version}</version>
+			</dependency>
 
-		<dependency>
-			<groupId>javax.transaction</groupId>
-			<artifactId>jta</artifactId>
-			<version>1.1</version>
-		</dependency>
+			<dependency>
+				<groupId>com.vaadin</groupId>
+				<artifactId>vaadin-client-compiled</artifactId>
+				<version>${vaadin.version}</version>
+			</dependency>
 
-		<dependency>
-			<groupId>commons-dbcp</groupId>
-			<artifactId>commons-dbcp</artifactId>
-			<version>1.4</version>
-			<scope>test</scope>
-		</dependency>
+			<dependency>
+				<groupId>com.vaadin</groupId>
+				<artifactId>vaadin-themes</artifactId>
+				<version>${vaadin.version}</version>
+			</dependency>
 
-		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<version>1.3.165</version>
-			<scope>test</scope>
-		</dependency>
+			<dependency>
+				<groupId>com.vaadin</groupId>
+				<artifactId>vaadin-spring</artifactId>
+				<version>1.0.0</version>
+			</dependency>
 
-		<!-- Dependencias Test -->
+			<dependency>
+				<groupId>org.vaadin.addon</groupId>
+				<artifactId>confirmdialog</artifactId>
+				<version>2.1.2</version>
+			</dependency>
 
-		<!-- Dependencias Topgroup commons -->
-		<dependency>
-			<groupId>topgroup.commons</groupId>
-			<artifactId>commons-security</artifactId>
-			<version>2.0.2-SNAPSHOT</version>
-		</dependency>
+			<!-- Dependencias Vaadin -->
 
-		<dependency>
-			<groupId>topgroup.commons</groupId>
-			<artifactId>commons-utils</artifactId>
-			<version>2.0.7</version>
-		</dependency>
+			<!-- Dependencias Topgroup commons -->
 
-		<dependency>
-			<groupId>topgroup.commons</groupId>
-			<artifactId>commons-vaadin</artifactId>
-			<version>1.0.6</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>topgroup.commons</groupId>
-			<artifactId>commons-menu-vaadin</artifactId>
-			<version>1.0.3-SNAPSHOT</version>
-		</dependency>
+			<dependency>
+				<groupId>topgroup.commons</groupId>
+				<artifactId>commons-vaadin</artifactId>
+				<version>2.0.5-SNAPSHOT</version>
+				<exclusions>
+					<exclusion>
+						<artifactId>javax.servlet</artifactId>
+						<groupId>org.eclipse.jetty.orbit</groupId>
+					</exclusion>
+				</exclusions>
+			</dependency>
 
-        <dependency>
-            <groupId>topgroup.commons.commons-crud</groupId>
-            <artifactId>commons-crud-vaadin</artifactId>
-            <version>2.0.0-SNAPSHOT</version>
-        </dependency>
-        
-		<!-- Dependencias Topgroup commons -->
+			<dependency>
+				<groupId>topgroup.commons</groupId>
+				<artifactId>commons-utils</artifactId>
+				<version>[2.0.11, 2.1.0-SNAPSHOT)</version>
+			</dependency>
 
-		<!-- Dependencias Apache -->
+			<!-- Dependencias Topgroup commons -->
 
-		<dependency>
-			<groupId>commons-collections</groupId>
-			<artifactId>commons-collections</artifactId>
-			<version>3.2.1</version>
-		</dependency>
+			<!-- Dependencias Test -->
 
-		<dependency>
-			<groupId>commons-lang</groupId>
-			<artifactId>commons-lang</artifactId>
-			<version>2.6</version>
-		</dependency>
+			<dependency>
+				<groupId>org.hamcrest</groupId>
+				<artifactId>hamcrest-all</artifactId>
+				<version>1.3</version>
+				<scope>test</scope>
+			</dependency>
 
-		<dependency>
-			<groupId>commons-beanutils</groupId>
-			<artifactId>commons-beanutils</artifactId>
-			<version>1.8.3</version>
-		</dependency>
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>4.11</version>
+				<scope>test</scope>
+				<exclusions>
+					<exclusion>
+						<groupId>org.hamcrest</groupId>
+						<artifactId>hamcrest-core</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
 
-		<!-- Dependencias Apache -->
+			<dependency>
+				<groupId>org.mockito</groupId>
+				<artifactId>mockito-all</artifactId>
+				<version>1.10.19</version>
+				<scope>test</scope>
+			</dependency>
 
-		<!-- Dependencias Logging -->
+			<!-- Dependencias Test -->
 
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>1.6.4</version>
-		</dependency>
+			<!-- Dependencias Logging -->
 
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>jcl-over-slf4j</artifactId>
-			<version>1.6.4</version>
-		</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-log4j12</artifactId>
+				<version>${slf4j.version}</version>
+			</dependency>
 
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.16</version>
-			<type>jar</type>
-		</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>jcl-over-slf4j</artifactId>
+				<version>${slf4j.version}</version>
+			</dependency>
 
-		<!-- Dependencias Logging -->
+			<dependency>
+				<groupId>log4j</groupId>
+				<artifactId>log4j</artifactId>
+				<version>1.2.18</version>
+			</dependency>
 
-		<!-- Dependencias Spring -->
+			<!-- Dependencias Logging -->
 
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-web</artifactId>
-			<version>3.1.4.RELEASE</version>
-		</dependency>
+			<!-- Dependencias Spring -->
 
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-core</artifactId>
-			<version>3.1.4.RELEASE</version>
-		</dependency>
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-core</artifactId>
+				<version>${spring-security.version}</version>
+			</dependency>
 
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-config</artifactId>
-			<version>3.1.4.RELEASE</version>
-		</dependency>
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-config</artifactId>
+				<version>${spring-security.version}</version>
+			</dependency>
 
-		<!-- http://stackoverflow.com/questions/9167637/spring-jpa-mvc-error-creating-bean -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-expression</artifactId>
-			<version>3.2.4.RELEASE</version>
-		</dependency>
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-web</artifactId>
+				<version>${spring-security.version}</version>
+			</dependency>
 
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-core</artifactId>
-			<version>3.2.4.RELEASE</version>
-		</dependency>
+			<!-- http://stackoverflow.com/questions/9167637/spring-jpa-mvc-error-creating-bean -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-expression</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
 
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-tx</artifactId>
-			<version>3.2.4.RELEASE</version>
-		</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-core</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
 
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-beans</artifactId>
-			<version>3.2.4.RELEASE</version>
-		</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-orm</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
 
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-			<version>3.2.4.RELEASE</version>
-		</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-tx</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
 
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context-support</artifactId>
-			<version>3.2.4.RELEASE</version>
-		</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-beans</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
 
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-web</artifactId>
-			<version>3.2.4.RELEASE</version>
-		</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-context-support</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
 
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-webmvc</artifactId>
-			<version>3.2.4.RELEASE</version>
-		</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-aop</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
 
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-orm</artifactId>
-			<version>3.2.4.RELEASE</version>
-		</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-aspects</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
 
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-aop</artifactId>
-			<version>3.2.4.RELEASE</version>
-		</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-context</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
 
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-aspects</artifactId>
-			<version>3.2.4.RELEASE</version>
-		</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-web</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
 
-		<!-- Dependencias Spring -->
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-core</artifactId>
+				<version>${hibernate.version}</version>
+				<exclusions>
+					<exclusion>
+						<artifactId>jboss-transaction-api_1.1_spec</artifactId>
+						<groupId>org.jboss.spec.javax.transaction</groupId>
+					</exclusion>
+				</exclusions>
+			</dependency>
 
-		<!-- Dependencias Vaadin -->
-		<dependency>
-			<groupId>com.vaadin</groupId>
-			<artifactId>vaadin</artifactId>
-			<version>${vaadin.version}</version>
-		</dependency>
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-ehcache</artifactId>
+				<version>${hibernate.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>net.sf.ehcache</groupId>
+						<artifactId>ehcache-core</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
 
-		<dependency>
-			<groupId>org.vaadin.addon</groupId>
-			<artifactId>confirmdialog</artifactId>
-			<version>1.2.0</version>
-		</dependency>
-		<!-- Dependencias Vaadin -->
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-validator</artifactId>
+				<version>${hibernate-validator.version}</version>
+			</dependency>
 
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-			<version>2.5</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>jstl</artifactId>
-			<version>1.1.2</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>taglibs</groupId>
-			<artifactId>standard</artifactId>
-			<version>1.1.0</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>jsp-api</artifactId>
-			<version>2.0</version>
-			<scope>provided</scope>
-		</dependency>
+			<dependency>
+				<groupId>javax.validation</groupId>
+				<artifactId>validation-api</artifactId>
+				<version>1.1.0.Final</version>
+			</dependency>
 
-		<dependency>
-			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjrt</artifactId>
-			<version>1.6.2</version>
-		</dependency>
+			<dependency>
+				<groupId>joda-time</groupId>
+				<artifactId>joda-time</artifactId>
+				<version>2.8.2</version>
+			</dependency>
 
-		<dependency>
-			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjweaver</artifactId>
-			<version>1.6.2</version>
-		</dependency>
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>javax.servlet-api</artifactId>
+				<version>3.0.1</version>
+			</dependency>
 
-		<!-- Dependencias Hibernate -->
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core</artifactId>
-			<version>4.2.4.Final</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.jboss.spec.javax.transaction</groupId>
-					<artifactId>jboss-transaction-api_1.1_spec</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
+		</dependencies>
 
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-validator</artifactId>
-			<version>4.3.1.Final</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-ehcache</artifactId>
-			<version>4.2.4.Final</version>
-			<exclusions>
-				<exclusion>
-					<groupId>net.sf.ehcache</groupId>
-					<artifactId>ehcache-core</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-
-		<!-- Dependencias Hibernate -->
-
-		<dependency>
-			<groupId>net.sf.ehcache</groupId>
-			<artifactId>ehcache-core</artifactId>
-			<version>2.6.6</version>
-		</dependency>
-
-		<dependency>
-			<groupId>net.sf.ehcache</groupId>
-			<artifactId>ehcache-web</artifactId>
-			<version>2.0.4</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.google.guava</groupId>
-			<artifactId>guava</artifactId>
-			<version>14.0.1</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.apache.velocity</groupId>
-			<artifactId>velocity</artifactId>
-			<version>1.7</version>
-		</dependency>
-
-		<!-- <dependency> <groupId>com.google.gwt</groupId> <artifactId>gwt-user</artifactId> <version>${gwt.version}</version> 
-			<scope>provided</scope> </dependency> <dependency> <groupId>javax.validation</groupId> <artifactId>validation-api</artifactId> 
-			<version>1.0.0.GA</version> <scope>provided</scope> </dependency> <dependency> <groupId>javax.validation</groupId> <artifactId>validation-api</artifactId> 
-			<version>1.0.0.GA</version> <classifier>sources</classifier> <scope>provided</scope> </dependency> -->
-	</dependencies>
+	</dependencyManagement>
 
 </project>

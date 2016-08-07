@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+	<!-- Generated 21/08/2009 08:18:27 by Hibernate Tools 3.2.4.GA -->
+<hibernate-mapping>
+ 	<class name="com.topgroup.commons.security.model.Access" mutable="false">  
+		<subselect>
+			SELECT a.idaction as actionId,r.idresource as resourceId,a.idSystem,
+			a.name as actionName ,a.description as actionDescription,
+			r.name as
+			resourceName,
+			r.description as resourceDescription
+			FROM accesses ac,actionsmaster a, resourcesmaster r
+			WHERE ac.idaction = a.idaction and
+			ac.idresource = r.idresource
+	</subselect>
+		<composite-id>
+			<key-property name="actionId" type="integer" />
+			<key-property name="resourceId" type="integer" />
+		</composite-id>
+
+		<property name="actionName" type="string" not-null="true" unique="true" />
+		<property name="resourceName" type="string" not-null="true" unique="true" />
+
+		<property name="actionDescription" type="string" />
+		<property name="resourceDescription" type="string" />
+
+		<property name="systemId" type="integer" column="IDSYSTEM" />
+
+	</class>
+</hibernate-mapping>

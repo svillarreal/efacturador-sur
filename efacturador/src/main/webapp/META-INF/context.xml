@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context docBase="efacturador" path="/efacturador" reloadable="true"
+	source="org.eclipse.jst.j2ee.server:efacturador-vaadin" crossContext="true">
+	<ResourceLink name="jdbc/efacturador" global="jdbc/efacturador"
+		type="javax.sql.DataSource" />
+</Context>

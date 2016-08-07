@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 21/08/2009 07:40:39 by Hibernate Tools 3.2.4.GA -->
+<hibernate-mapping>
+    <class name="com.topgroup.commons.security.model.System" table="SYSTEMS">
+        <id name="id" type="integer">
+            <column name="IDSYSTEM" precision="22" scale="0" />
+            <generator class="increment" />
+        </id>
+        <property name="name" type="string">
+            <column name="NAME" length="20" not-null="true" />
+        </property>
+        <property name="simulationAuthority" type="string">
+            <column name="SIMULATIONAUTH" length="100" />
+        </property>
+        
+        <set name="profiles" inverse="true" lazy="true"  >
+            <key>
+                <column name="IDSYSTEM" precision="22" scale="0" not-null="true" />
+            </key>
+            <one-to-many class="ar.com.proevolutionit.efacturador.base.view.bean.PerfilBean" />
+        </set>
+         <set name="roles" inverse="true" lazy="true"  >
+            <key>
+                <column name="IDSYSTEM" precision="22" scale="0" not-null="true" />
+            </key>
+            <one-to-many class="ar.com.proevolutionit.efacturador.base.view.bean.RolBean" />
+        </set>
+         
+         <set name="accesses" inverse="true" lazy="true"  >
+            <key>
+                <column name="IDSYSTEM"  not-null="true" />
+            </key>
+            <one-to-many class="com.topgroup.commons.security.model.Access" />
+        </set>
+     
+        <set name="inhabilitations" inverse="true" lazy="true" cascade="all,delete-orphan"  >
+            <key>
+                <column name="IDSYSTEM" not-null="true" />
+            </key>
+            <one-to-many class="com.topgroup.commons.security.model.Inhabilitation" />
+        </set>
+        
+        <component name="extensionDefinition" class="com.topgroup.commons.security.model.UserExtensionDefinition"> 
+        	<property name="extensionObserverClass" type="class" column="EXTENSIONOBSERVER"/>
+        	<!-- 
+        	<property name="extensionClass" type="class" />
+        	<property name="extensionView" type="string"/>
+        	 -->
+        </component>
+       
+    </class>
+</hibernate-mapping>

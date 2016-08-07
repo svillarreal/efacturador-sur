@@ -1,0 +1,759 @@
+// VARS
+celeste 		= #0185cf
+verde 			= #68ae3e
+rojo 			= #d52b1e
+azul 			= #162a71
+blanco  		= #ffffff
+blanco_oscuro 	= #f6f6f6
+gris_mas_claro 	= #e7e7e7
+gris_claro 		= #cccccc
+gris 			= #808080
+gris_oscuro 	= #333333
+negro 	 		= #000000
+// MIXINS
+box-shadow()
+	-webkit-box-shadow arguments
+	box-shadow arguments
+animation()
+	-webkit-animation arguments
+	animation arguments
+border-radius()
+	-webkit-border-radius arguments
+	border-radius arguments
+// BASE STYLES
+@import "../chameleon/legacy-styles.css"
+// FONTS
+@font-face
+	font-family 'Open Sans'
+	src url('fonts/OpenSans-Light-webfont.eot')
+	src url('fonts/OpenSans-Light-webfont.eot?#iefix') format('embedded-opentype'), url('fonts/OpenSans-Light-webfont.woff') format('woff'), url('fonts/OpenSans-Light-webfont.ttf') format('truetype'), url('fonts/OpenSans-Light-webfont.svg#open_sanslight') format('svg')
+	font-weight 300
+	font-style normal
+@font-face
+	font-family 'Open Sans'
+	src url('fonts/OpenSans-Regular-webfont.eot')
+	src url('fonts/OpenSans-Regular-webfont.eot?#iefix') format('embedded-opentype'), url('fonts/OpenSans-Regular-webfont.woff') format('woff'), url('fonts/OpenSans-Regular-webfont.ttf') format('truetype'), url('fonts/OpenSans-Regular-webfont.svg#open_sansregular') format('svg')
+	font-weight 400
+	font-style normal
+@font-face
+	font-family 'Open Sans'
+	src url('fonts/OpenSans-Bold-webfont.eot')
+	src url('fonts/OpenSans-Bold-webfont.eot?#iefix') format('embedded-opentype'), url('fonts/OpenSans-Bold-webfont.woff') format('woff'), url('fonts/OpenSans-Bold-webfont.ttf') format('truetype'), url('fonts/OpenSans-Bold-webfont.svg#open_sansbold') format('svg')
+	font-weight 700
+	font-style normal
+// MAIN
+*
+	-webkit-box-sizing border-box
+	box-sizing border-box
+	&:focus
+		outline none !important
+.v-app
+.v-window
+.v-popupview-popup
+.v-app input
+.v-app select
+.v-app button
+.v-app textarea
+.v-window input
+.v-window select
+.v-window button
+.v-window textarea
+.v-popupview-popup input
+.v-popupview-popup select
+.v-popupview-popup button
+.v-popupview-popup textarea
+.v-tooltip
+.v-filterselect-suggestpopup
+.v-datefield-popup
+.v-contextmenu
+.v-Notification
+.v-menubar-submenu
+.v-table-header-drag
+.v-drag-element
+	font-family 'Open Sans', arial, sans-serif
+	color gris
+.v-panel-content
+.v-panel-nocaption
+.v-panel-deco
+	border none !important
+.v-spacing
+	height 0px !important
+.v-disabled
+	opacity 0.5 !important
+.todo-bold
+	&.v-label
+	.v-textfield
+	.v-caption
+		font-weight bold !important
+.baseSearch > .v-panel-content > .v-verticallayout > .v-slot:first-child > .v-verticallayout > .v-slot > .v-horizontallayout
+	padding 0px
+input[type=checkbox]
+	margin 0
+.v-slot-mainBody
+	height auto !important
+// LOADING
+.v-app-loading
+.v-loading-indicator
+.v-loading-indicator-delay
+.v-loading-indicator-wait
+	position fixed !important
+	background rgba(255,255,255,0.5) !important
+	margin 0 !important
+	width 100% !important
+	height 100% !important
+	&:before
+		content "\f021"
+		font-family "FontAwesome"
+		font-size 32px
+		color gris
+		position fixed
+		top 50%
+		left 50%
+		margin-top -16px
+		margin-left -16px
+		animation(spin 2s infinite linear)
+		@keyframes spin
+			0%
+				transform rotate(0deg)
+			100%
+				transform rotate(359deg)
+// TITLES
+.wizard-title
+	.v-label
+		font-size 20px
+		font-weight 300
+		color celeste
+		white-space normal !important
+.v-slot-stage-title
+.v-slot-stage-subtitle
+	display inline-block !important
+.stage-title
+.stage-subtitle
+	font-size 18px !important
+.stage-title:after
+	content "."
+	margin-right 10px
+.stage-on
+	border-bottom 2px solid celeste !important
+	.stage-title
+	.stage-subtitle
+		color celeste
+.stage-off
+	border-bottom 2px solid gris !important
+	.stage-title
+	.stage-subtitle
+		color gris
+.stage-note
+	font-weight bold
+.v-slot-stage-on
+.v-slot-stage-off
+	margin-bottom 30px
+.v-slot-stage-on:last-child
+	margin-bottom 0px !important
+.v-slot-wizard-stage-component-note
+	margin-bottom 10px
+.title
+	background-color celeste
+	color blanco
+	font-size 14px !important
+	font-weight 300
+	padding 5px 10px
+	margin-bottom 0px !important
+.base_form_border
+	border 1px solid celeste
+	margin-bottom 20px
+.v-caption
+.v-widget
+	font-size 12px
+// FORM
+.v-form
+	width 100% !important
+	padding 10px
+	border 1px solid celeste
+	.v-gridlayout-slot
+		padding-right 12px
+		&:last-child
+			padding-right 24px !important
+	.v-has-caption
+		display block !important
+		.v-caption
+			.v-captiontext
+				color celeste
+	.v-form-footer
+		display none !important
+	.base_form_1_column
+		.v-gridlayout-slot
+			width 100% !important
+	.base_form_2_column
+		.v-gridlayout-slot
+			width (100 / 2)% !important
+	.base_form_3_column
+	#vigencia_column_form_layout_id
+		.v-gridlayout-slot
+			width (100 / 3)% !important
+	#datosAdicionalesColumnFormLayout_id
+		margin-bottom 20px
+// FIELDS
+.v-textfield
+.v-filterselect
+.v-textarea
+	background-image none !important
+	border 1px solid gris_claro !important
+	outline none !important
+	width 100% !important
+	&.v-readonly
+		background gris_mas_claro !important
+// text
+.v-textfield
+	height 30px !important
+	padding 5px !important
+	color gris !important
+	&.v-textfield-focus
+		background none !important
+	&.v-readonly.v-textfield-focus
+		background gris_mas_claro !important
+.v-textarea
+	color gris !important
+// select
+.v-filterselect
+	height 30px !important
+	padding 5px 20px 5px 5px !important
+	.v-filterselect-input
+		width 100% !important
+		height 18px !important
+		color gris !important
+	.v-filterselect-button
+		background none !important
+		position relative
+		opacity 1 !important
+		&:before
+			content ""
+			position absolute
+			top 5px
+			right 2px
+			width 0
+			height 0
+			border-style solid
+			border-width 8px 6px 0px 6px
+			border-color gris_claro transparent transparent transparent
+// dropdown
+.v-filterselect-suggestpopup
+	padding 0px !important
+	margin-top 6px !important
+	background blanco !important
+	border none !important
+	border-radius(0 !important)
+	.gwt-MenuItem
+		padding 2px 10px 4px !important
+		color gris
+		cursor pointer
+		line-height 1
+	.gwt-MenuItem-selected
+		background-color celeste !important
+		color blanco
+	.v-filterselect-prevpage
+	.v-filterselect-prevpage-off
+	.v-filterselect-nextpage
+	.v-filterselect-nextpage-off
+		background gris !important
+		border none !important
+		opacity 1 !important
+		height inherit !important
+		span
+			background none !important
+			position relative
+			&:before
+				content ""
+				display block
+				width 0
+				height 0
+				position absolute
+				top 1px
+				left 50%
+				margin-left -5px
+	.v-filterselect-prevpage
+	.v-filterselect-prevpage-off
+		span:before
+			border-style solid
+			border-width 0 5px 7px 5px
+			border-color transparent transparent blanco transparent
+	.v-filterselect-nextpage
+	.v-filterselect-nextpage-off
+		span:before
+			border-style solid
+			border-width 7px 5px 0 5px
+			border-color blanco transparent transparent transparent
+	.v-filterselect-status
+		display none !important
+// BUTTONS
+.v-button
+	background-color azul
+	background-image none !important
+	border none !important
+	margin 10px 5px
+	.v-button-wrap
+		padding 7px 20px 8px !important
+		background none !important
+		border none !important
+		.v-button-caption
+			color blanco
+			text-transform uppercase
+			text-shadow none !important
+	&.v-disabled
+	&.disabled
+		opacity .5 !important
+		cursor default !important
+		&:focus
+		&:active
+			background-color azul
+	&.btn_neg
+		background-color rojo !important
+	&.btn_pos
+		background-color verde !important
+.v-button-link:focus .v-button-caption
+.v-button-borderless:focus .v-button-caption
+	margin 0 !important
+	border none !important
+.v-button-link
+	background none !important
+	.v-button-wrap
+		padding 0px !important
+		.v-button-caption
+			color gris !important
+		.v-icon.FontAwesome
+			font-size 18px
+			font-weight bold
+			color celeste !important
+			margin 0
+.v-link
+	a
+		color negro !important
+		.v-icon.FontAwesome
+			font-size 14px
+			font-weight bold
+			color gris !important
+			margin 0
+// ICONS
+.add-porcentaje
+.add-peso
+	&:before	
+		content ""
+		width 20px
+		height 20px
+		background-repeat no-repeat
+		position absolute
+		top 23px
+.add-porcentaje
+	&:before
+		right -13px
+		background-image url('img/add-porcentaje.png')
+	.v-slot
+		padding-right 10px
+.add-peso
+	&:before
+		left -10px
+		background-image url('img/add-peso.png')
+	.v-slot
+		padding-left 10px
+// icons error
+.v-required-field-indicator
+	color rojo !important
+.v-errorindicator
+	margin-left 10px
+	margin-right 10px
+.v-form-errormessage
+	background-color rojo
+	color blanco
+	border-radius 4px
+	padding 5px 10px
+	text-align center
+	&:before
+		content "\f071"
+		font-family FontAwesome
+		margin-right 10px
+	.gwt-HTML
+		display inline-block
+.v-layout.v-horizontal.v-widget
+	white-space normal !important
+.v-label.v-widget.v-has-width
+	width 100% !important
+.wizard-message-error
+.wizard-message-info
+	display block
+	padding 5px 10px
+	margin 10px
+	text-align center
+	color blanco
+	border-radius 4px
+	.v-label
+		white-space normal !important
+		&:before
+			font-family FontAwesome
+			margin-right 10px
+.wizard-message-error
+	background-color rojo
+	.v-label:before
+		content "\f071"
+.wizard-message-info
+	background-color azul
+	.v-label:before
+		content "\f05a"
+// TABLE
+.v-table
+	height auto !important
+	margin-top 10px !important
+	margin-bottom 10px !important
+	// table header
+	.v-table-header-wrap
+		background celeste !important
+		border none !important
+		height auto !important
+		.v-table-header-cell
+		.v-table-header-cell-asc
+		.v-table-header-cell-desc
+			.v-table-resizer
+				border-color blanco
+				border-width 1px
+				height 30px
+			.v-table-sort-indicator
+				background none !important
+				height 30px
+				&:before
+					content ""
+					display block
+					margin-top 11px
+					width 0
+					height 0
+			.v-table-caption-container
+				text-align left
+				font-weight 100
+				color blanco
+				text-overflow ellipsis
+				padding 6px 10px
+				margin 0 !important
+				float none !important
+		.v-table-header-cell-asc
+			.v-table-sort-indicator:before
+				border-style solid
+				border-width 0 5px 7px 5px
+				border-color transparent transparent blanco transparent
+		.v-table-header-cell-desc
+			.v-table-sort-indicator:before
+				border-style solid
+				border-width 7px 5px 0 5px
+				border-color blanco transparent transparent transparent
+		.v-table-column-selector
+			background blanco !important
+			width 17px
+			height 30px !important
+			margin-top -30px !important
+			&:before
+				content ""
+				display block
+				margin-top 9px
+				margin-left 4px
+				width 0
+				height 0
+				border-style solid
+				border-width 6px 0 6px 8px
+				border-color transparent transparent transparent celeste
+	// table body
+	.v-table-body-wrapper
+		max-height 400px !important
+		height auto !important
+		overflow-y auto !important
+		border none !important
+		.v-table-table
+			border-bottom 2px solid gris_claro
+			tr
+				&.v-table-row
+					background-color blanco_oscuro
+				&.v-table-row-odd
+					background-color gris_mas_claro
+				&.v-table-focus
+					.v-table-cell-content
+						border-top 1px solid transparent !important
+						border-bottom 1px solid transparent !important
+				&.v-selected
+					background verde !important
+					.v-table-cell-content
+						.v-table-cell-wrapper
+						.v-required-field-indicator
+							color blanco !important
+					.v-textfield
+						background blanco !important
+						padding 3px 5px !important
+						&.v-readonly
+							background gris_claro !important
+					.v-filterselect
+						padding 3px 20px 3px 5px !important
+						.v-filterselect-input
+							height 16px !important
+						.v-filterselect-button:before
+							top 4px !important
+					.v-textfield
+					.v-filterselect
+						height 24px !important
+				.v-table-cell-content
+					padding 3px 11px 3px 12px !important
+					font-size 12px
+					border-right 1px solid rgba(0,0,0,0.1)
+					.v-table-cell-wrapper
+						height 24px
+						line-height 24px
+						color celeste
+					.v-button-caption
+						color gris !important
+						font-size 12px !important
+						font-weight normal !important
+					.v-widget.v-has-caption.v-caption-on-right
+						width 100% !important
+				.v-table-cell-content-normal
+				.v-table-cell-content-normal-changed
+				.v-table-cell-content-normal-invalid
+				.v-table-cell-content-normal-changed-invalid
+				.v-table-cell-content-selected
+				.v-table-cell-content-selected-changed
+				.v-table-cell-content-selected-invalid
+				.v-table-cell-content-selected-changed-invalid
+					color celeste
+					.v-datefield-popupcalendar
+						padding-right 25% !important
+					.v-datefield-button
+						width 24px !important
+						height 24px !important
+						&:before
+							font-size 14px !important
+					.v-errorindicator
+						margin-right 0px !important
+	// table footer
+	.v-table-footer-wrap
+		padding 10px 0px
+		border none !important
+		td
+			border-right none !important
+	.v-table-focus
+		.v-table-cell-content
+			border-top 1px solid transparent !important
+			border-bottom 1px solid transparent !important
+// CONTEXT MENU
+.v-contextmenu
+	padding 0px !important
+	background blanco !important
+	border none !important
+	.gwt-MenuItem
+		padding 5px 10px
+		.v-on
+		.v-off
+			background none !important
+			padding-left 20px !important
+		.v-on:before
+			content "\f00c"
+			font-family FontAwesome
+			position absolute
+			left 10px
+		&.gwt-MenuItem-selected
+			background celeste !important
+			.v-on:before
+				color blanco
+		.v-icon.FontAwesome
+			margin-right 5px
+		.v-icon
+			padding 2px
+			border-radius(2px)
+			background-color blanco
+// POPUP
+.v-window-modalitycurtain
+	background #fff !important
+.v-window
+	background blanco !important
+	border none !important
+	.v-window-contents > .v-scrollable > .v-verticallayout
+		padding 15px
+	> .popupContent > .v-window-wrap > .v-window-contents > .v-scrollable > .v-panel > .v-panel-content
+		padding 10px !important
+	.v-window-wrap
+		background none !important
+		// header
+		.v-window-outerheader
+			background celeste
+			padding 7px 70px 7px 15px !important
+			.v-window-header
+				color blanco
+				font-size 16px
+				text-align left
+		// body
+		.v-window-contents
+			.v-align-center
+				text-align left !important
+	// tables
+	.v-table
+		.v-table-body-wrapper
+			max-height 230px !important
+// NOTIFICATIONS
+.v-Notification
+	opacity 1 !important
+	background celeste !important
+	border none !important
+	border-radius 0px !important
+	padding 15px !important
+	&:before
+		content "\f00d"
+		font-family FontAwesome
+		font-size 16px
+		position absolute
+		top -1px
+		right 3px
+	.popupContent
+		h1
+			background none !important
+			font-size 14px
+			font-weight normal
+			margin 0
+			padding 0
+			&:before
+				content "\f071"
+				font-family FontAwesome
+				margin-right 10px
+	&.v-Notification-error
+	&.error
+		background rojo !important
+// datefield
+.v-datefield
+	width 100% !important
+	padding-right 40px !important
+	input
+		width 100% !important
+.v-datefield-button
+	width 30px
+	height 30px
+	margin-left 10px
+	background celeste
+	border none !important
+	border-radius(50%)
+	&:before
+		content "\f073"
+		font-family FontAwesome
+		font-size 16px
+		line-height 1
+		color blanco
+	&.v-datefield-button-readonly
+		display inline-block !important
+		background-color gris_claro
+		cursor default
+// datefield dropdown
+.v-datefield-popup
+	background blanco_oscuro !important
+	border none !important
+	border-radius(0px !important)
+	.v-datefield-calendarpanel-header
+		td
+			background celeste !important
+			border none !important
+			button
+			span
+				background none !important
+				border none !important
+				color blanco !important
+				text-shadow none !important
+				text-transform uppercase !important
+	.v-datefield-calendarpanel-body
+		.v-datefield-calendarpanel-weekdays
+			background-color gris
+			strong
+				background none !important
+				text-shadow none !important
+		.v-datefield-calendarpanel-day
+			margin-left 0.3em !important
+			&-selected
+				background-color celeste !important
+				text-shadow none !important
+			&-focused
+			&:hover
+				background-color gris_claro
+				border-color transparent !important
+			&-today
+				background none
+				border 1px solid celeste !important
+// TABS
+.v-tabsheet
+	padding 15px
+	.v-tabsheet-tabitemcell
+		padding-right 2px !important
+		.v-tabsheet-tabitem
+			border none !important
+			border-radius(0px !important)
+			.v-caption
+				background gris_claro
+				color gris !important
+				width inherit !important
+				padding 8px 15px !important
+				border-radius(0px !important)
+				.v-captiontext
+					font-size 14px !important
+					color gris !important
+					text-shadow none !important
+			&.v-tabsheet-tabitem-selected
+					.v-caption
+						background celeste !important
+						.v-captiontext
+							font-weight 600 !important
+							color blanco !important
+	.v-tabsheet-spacertd > div
+	.v-tabsheet-deco
+		border none !important
+	.v-tabsheet-content
+		background-color blanco_oscuro
+		width 100% !important
+		border-top 2px solid celeste
+		border-left 2px solid gris_mas_claro
+		border-right 2px solid gris_mas_claro
+		border-bottom 2px solid gris_mas_claro
+		.v-verticallayout
+			.v-label
+				font-size 14px
+				font-weight 100
+				margin-top 5px
+				margin-bottom 5px
+		.v-tabsheet-tabsheetpanel
+			.v-gridlayout
+				padding 10px
+		.v-checkbox
+			padding 5px 0
+			input[type=checkbox]
+				margin 3px 6px 3px 3px !important
+// TOOLTIPS
+.v-tooltip
+	max-width 250px
+	padding 12px 8px !important
+	background-color blanco !important
+	border 3px solid verde !important
+	outline none !important
+	border-radius(5px !important)
+	box-shadow(2px 2px 3px rgba(0,0,0,0.25) !important)
+	&:before
+		content ""
+		width 20px
+		height 20px
+		position absolute
+		top -20px
+		left 8px
+		background-image url('img/tooltip-triangle-top.png')
+	.v-errormessage
+	.v-tooltip-text
+		background none !important
+		padding-left 30px !important
+		color gris !important
+		line-height 1
+		overflow hidden !important
+		&:before
+			content "\f059"
+			position absolute
+			top 50%
+			left 8px
+			width 24px
+			height 24px
+			margin-top -12px
+			font-family FontAwesome
+			font-size 24px
+			color verde
