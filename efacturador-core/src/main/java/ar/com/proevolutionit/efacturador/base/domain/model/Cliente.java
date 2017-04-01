@@ -34,7 +34,7 @@ public class Cliente extends BaseEntity<Integer> {
 
 	private Empresa empresa;
 
-	private String cuit;
+	private String cuitl;
 
 	private Domicilio domicilio;
 
@@ -58,13 +58,13 @@ public class Cliente extends BaseEntity<Integer> {
 		this.empresa = empresa;
 	}
 
-	@Column(name = "d_cuit")
-	public String getCuit() {
-		return cuit;
+	@Column(name = "d_cuitl")
+	public String getCuitl() {
+		return cuitl;
 	}
 
-	public void setCuit(String cuit) {
-		this.cuit = cuit;
+	public void setCuitl(String cuitl) {
+		this.cuitl = cuitl;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)

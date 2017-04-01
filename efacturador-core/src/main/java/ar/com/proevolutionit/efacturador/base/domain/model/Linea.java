@@ -47,7 +47,7 @@ public class Linea extends BaseEntity<Integer> {
 	private UnidadMedida unidadMedida;
 
 	@Id
-	@Column(name = "c_producto")
+	@Column(name = "c_linea")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Override
 	public Integer getId() {

@@ -42,7 +42,7 @@ public class Precio extends BaseEntity<Integer> {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "c_punto_venta")
+	@JoinColumn(name = "c_producto")
 	public Producto getProducto() {
 		return producto;
 	}
